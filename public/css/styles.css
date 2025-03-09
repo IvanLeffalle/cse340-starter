@@ -1,6 +1,275 @@
 /******* Change Box Model ***************/
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+:root {
+  --primary-color: #222831;
+  --secondary-color: #393e46;
+
+  --accent-color: #60c5ff;
+  --accent-color-2: #eeeeee;
+  --text-color-light: #eeeeee;
+  --text-color-dark: #222831;
+
+  --font-title: "Montserrat", sans-serif;
+  --font-content: "Roboto", sans-serif;
+}
+body {
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-image: url("../images/site/checkerboard.jpg");
+  color: var(--text-color);
+  margin: 0;
+  overflow-x: hidden;
+  font-family: var(--font-content);
+}
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2rem;
+}
+p,
+li {
+  font-size: 1.2rem;
+}
+#wrapper {
+  background-color: var(--accent-color-2);
+  border: 5px solid #60c5ff;
+  margin: 1rem;
+  border-radius: 10px;
+  padding: 3rem;
+  max-width: 80%;
+  margin: 0 auto;
+  max-width: 1024px;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.siteName {
+  font-size: 44px;
+  font-family: var(--font-title);
+  color: var(--primary-color);
+}
+
+.siteName a {
+  text-decoration: none;
+  color: inherit;
+}
+#tools a {
+  text-decoration: none;
+  font-size: 24px;
+  color: inherit;
+}
+
+.navigation {
+  background-color: var(--secondary-color);
+  padding: 1rem;
+  color: var(--text-color-light);
+}
+
+.navigation ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  font-family: var(--font-content);
+  font-size: 24px;
+}
+.hero {
+  background-image: url("../images/vehicles/delorean.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  min-height: 300px;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 4rem;
+}
+.aside-hero {
+  font-size: 24px;
+  color: var(--accent-color);
+  background-color: rgba(238, 238, 238, 0.664);
+  max-width: 450px;
+}
+.items-home {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: space-between;
+}
+.upgrades-item {
+  background-color: var(--accent-color);
+  width: 200px;
+  height: 100px;
+  padding: 2rem;
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.upgrades-item img {
+  width: 64px;
+  height: 64px;
+}
+.items-group {
+  display: flex;
+  text-align: center;
+}
+
+/*Media queries*/
+/* Mobile Devices (up to 600px) */
+@media only screen and (max-width: 600px) {
+  body {
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p,
+  li {
+    font-size: 1rem;
+  }
+
+  #wrapper {
+    padding: 1.5rem;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .siteName {
+    font-size: 28px;
+  }
+
+  .navigation ul {
+    flex-direction: column;
+    padding: 0;
+    align-items: center;
+  }
+
+  .hero {
+    min-height: 200px;
+    background-size: cover;
+  }
+
+  .items-home {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .upgrades-item {
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .aside-hero {
+    font-size: 18px;
+    max-width: 100%;
+    padding: 1rem;
+  }
+}
+
+/* Tablets (600px to 768px) */
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  p,
+  li {
+    font-size: 1.1rem;
+  }
+
+  #wrapper {
+    padding: 2rem;
+  }
+
+  .navigation ul {
+    font-size: 20px;
+  }
+
+  .hero {
+    min-height: 250px;
+  }
+
+  .items-home {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .upgrades-item {
+    width: 45%;
+    margin: 1rem 0;
+  }
+}
+
+/* Desktops (768px and up) */
+@media only screen and (min-width: 769px) {
+  body {
+    font-size: 1.2rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  p,
+  li {
+    font-size: 1.2rem;
+  }
+
+  #wrapper {
+    padding: 3rem;
+  }
+
+  .navigation ul {
+    font-size: 24px;
+  }
+
+  .hero {
+    min-height: 300px;
+  }
+
+  .items-home {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .upgrades-item {
+    width: 200px;
+    margin: 1rem;
+  }
+
+  .aside-hero {
+    font-size: 24px;
+    max-width: 450px;
+    padding: 1.5rem;
+  }
 }
