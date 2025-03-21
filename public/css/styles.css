@@ -82,9 +82,14 @@ header {
   display: flex;
   justify-content: space-around;
   list-style: none;
-  font-family: var(--font-content);
-  font-size: 24px;
 }
+.navigation ul li a {
+  text-decoration: none;
+  font-size: 24px;
+  font-family: var(--font-content);
+  color: var(--text-color-light);
+}
+
 .hero {
   background-image: url("../images/vehicles/delorean.jpg");
   background-repeat: no-repeat;
@@ -124,7 +129,60 @@ header {
   display: flex;
   text-align: center;
 }
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  max-width: 80%;
+  margin: 0 auto;
+}
+#inv-display a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  display: flex;
+}
 
+.vehicle {
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  max-width: 350px;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle img {
+  max-width: 100px;
+  width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.vehicles-title {
+  text-align: center;
+}
+span {
+  font-family: "Nunito", sans-serif;
+  font-size: 20px;
+}
+
+#error-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#error-gif {
+  margin: auto auto;
+  width: 80vw;
+  max-width: 256px;
+  border-radius: 100%;
+}
 /*Media queries*/
 /* Mobile Devices (up to 600px) */
 @media only screen and (max-width: 600px) {
