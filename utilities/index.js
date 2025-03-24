@@ -106,7 +106,13 @@ Util.buildVehicleGrid = async function (data) {
   }
   return grid;
 };
-
+Util.error500Page = async function(req,res,next){
+  let grid;
+  grid = '<div id="error-500">';
+  grid +=
+  "<H1>Error 500" + "</H3>";
+  return grid; 
+}
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for

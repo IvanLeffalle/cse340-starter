@@ -13,6 +13,7 @@ const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities/index");
+const errorController = require("./controllers/errorController")
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -28,7 +29,8 @@ app.use(static);
 app.get("/", utilities.handleErrors(baseController.buildHome));
 //Inventory routes
 app.use("/inv", inventoryRoute);
-
+//Error 500 Route
+app.use("/error", utilities.handleErrors(errorController.errorPage))
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({ status: 404, message: "Sorry, we appear to have lost that page." });

@@ -156,7 +156,7 @@ header {
 }
 
 .vehicle img {
-  max-width: 100px;
+  border-radius: 5px;
   width: 200px;
   height: auto;
   display: block;
@@ -182,6 +182,9 @@ span {
   width: 80vw;
   max-width: 256px;
   border-radius: 100%;
+}
+.error-image{
+  width: 100%;
 }
 /*Media queries*/
 /* Mobile Devices (up to 600px) */
@@ -244,6 +247,10 @@ span {
     max-width: 100%;
     padding: 1rem;
   }
+  #vehicle-img img{
+    max-width: 100%;
+  }
+
 }
 
 /* Tablets (600px to 768px) */
@@ -282,6 +289,7 @@ span {
     width: 45%;
     margin: 1rem 0;
   }
+
 }
 
 /* Desktops (768px and up) */
