@@ -1,18 +1,6 @@
 <% if (title) { %>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-  </head>
-  <body>
-    <div id="wrapper">
       <h1><%= title %></h1>
       <p><%= message %></p>
-      <img class="error-image" src="/images/site/error-image.jpg"/>
+      <img alt="error-image" class="error-image" src="/images/site/error-image.jpg"/>
       <a href="/">Go Home</a>
-    </div>
-  </body>
-</html>
 <% } else { res.redirect('/') } %>
