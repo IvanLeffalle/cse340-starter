@@ -16,7 +16,7 @@ const utilities = require("./utilities/index");
 const errorController = require("./controllers/errorController");
 const session = require("express-session");
 const pool = require("./database/");
-const accountRoute = require("./routes/accountRoute")
+const accountRoute = require("./routes/accountRoute");
 /* ************************
  * Middleware
  * *************************/

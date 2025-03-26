@@ -107,35 +107,60 @@ Util.buildVehicleGrid = async function (data) {
   return grid;
 };
 
-
-Util.error500Page = async function(req,res,next){
+Util.error500Page = async function (req, res, next) {
   let grid;
   grid = '<div id="error-500">';
-  grid +=
-  "<H1>Error 500" + "</H3>";
-  return grid; 
-}
+  grid += "<H1>Error 500" + "</H3>";
+  return grid;
+};
 
 //login form
 Util.loginForm = async function () {
   let form;
   form = '<form id="login-form">';
-  form += '<label for="username"> Username </label>'
-  form += '<input id="username" type=text>'
+  form += '<label for="username"> Username </label>';
+  form += '<input id="username" type=text>';
 
-  form += '<label for="password"> Password </label>'
-  form += '<input id="password" type=password>'
+  form += '<label for="password"> Password </label>';
+  form += '<input id="password" type=password>';
 
-  form += '<button id onClick="submit">Login</button>'
-  form += "</form>"
+  form += '<button id onClick="submit">Login</button>';
+  form += "</form>";
 
-  form += '<div class="sing-up-link">'
-  form += '<span>No account? <a href="/">Sing-up</a></span>'
-  form += '</div>'
+  form += '<div class="sing-up-link">';
+  form += '<span>No account? <a href="/account/register">Sing-up</a></span>';
+  form += "</div>";
 
   return form;
-  
-}
+};
+
+//register form
+Util.registerForm = async function () {
+  let form = `
+    <form id="login-form">
+      <label for="firstName"> First Name </label>
+      <input id="firstName" type="text" required>
+
+      <label for="lastName"> Last Name </label>
+      <input id="lastName" type="text" required>
+
+      <label for="email"> Email Address </label>
+      <input id="email" type="email" required>
+
+      <label for="password"> Password </label>
+      <input id="pword" name="pword" type="password" required
+        pattern="^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$"
+        title="Password must be at least 12 characters long, include at least 1 uppercase letter, 1 number, and 1 special character.">
+      <span id="pswdBtn">Show Password</span>
+
+      <button type="submit" id="register-btn">Register</button>
+
+      <p id="password-error" style="color: red; display: none;">Password must be at least 12 characters long, contain an uppercase letter, a number, and a special character.</p>
+    </form>
+  `;
+
+  return form;
+};
 
 /* ****************************************
  * Middleware For Handling Errors
