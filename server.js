@@ -13,7 +13,33 @@ const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities/index");
-const errorController = require("./controllers/errorController")
+const errorController = require("./controllers/errorController");
+const session = require("express-session");
+const pool = require("./database/");
+
+/* ************************
+ * Middleware
+ * *************************/
+app.use(
+  session({
+    store: new (require("connect-pg-simple")(session))({
+      createTableIfMissing: true,
+      pool,
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    name: "sessionId",
+  })
+);
+
+//Express Messages Middleware
+app.use(require("connect-flash")());
+app.use(function (req, res, next) {
+  res.locals.messages = require("express-messages")(req, res);
+  next();
+});
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -30,7 +56,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 //Inventory routes
 app.use("/inv", inventoryRoute);
 //Error 500 Route
-app.use("/error", utilities.handleErrors(errorController.errorPage))
+app.use("/error", utilities.handleErrors(errorController.errorPage));
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({ status: 404, message: "Sorry, we appear to have lost that page." });
