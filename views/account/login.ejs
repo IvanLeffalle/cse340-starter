@@ -1,0 +1,6 @@
+<% if (title){ %>
+<h1> <%=title%></h1>
+<div id="login-form"> 
+    <%-form%>
+</div>
+<%} else {res.redirect('/')}%> <%# messages() %>

@@ -106,6 +106,8 @@ Util.buildVehicleGrid = async function (data) {
   }
   return grid;
 };
+
+
 Util.error500Page = async function(req,res,next){
   let grid;
   grid = '<div id="error-500">';
@@ -113,6 +115,28 @@ Util.error500Page = async function(req,res,next){
   "<H1>Error 500" + "</H3>";
   return grid; 
 }
+
+//login form
+Util.loginForm = async function () {
+  let form;
+  form = '<form id="login-form">';
+  form += '<label for="username"> Username </label>'
+  form += '<input id="username" type=text>'
+
+  form += '<label for="password"> Password </label>'
+  form += '<input id="password" type=password>'
+
+  form += '<button id onClick="submit">Login</button>'
+  form += "</form>"
+
+  form += '<div class="sing-up-link">'
+  form += '<span>No account? <a href="/">Sing-up</a></span>'
+  form += '</div>'
+
+  return form;
+  
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for

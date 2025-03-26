@@ -16,7 +16,7 @@ const utilities = require("./utilities/index");
 const errorController = require("./controllers/errorController");
 const session = require("express-session");
 const pool = require("./database/");
-
+const accountRoute = require("./routes/accountRoute")
 /* ************************
  * Middleware
  * *************************/
@@ -57,6 +57,8 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", inventoryRoute);
 //Error 500 Route
 app.use("/error", utilities.handleErrors(errorController.errorPage));
+//Account routes - week 4
+app.use("/account", accountRoute);
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({ status: 404, message: "Sorry, we appear to have lost that page." });
