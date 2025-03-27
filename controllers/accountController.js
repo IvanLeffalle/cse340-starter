@@ -1,5 +1,6 @@
 const utilities = require("../utilities");
 const accountCont = {};
+const accountModel = require ("../models/account-model")
 
 accountCont.buildLogin = async function (req, res, next) {
   let nav = await utilities.getNav();
@@ -21,5 +22,44 @@ accountCont.buildRegister = async function (req, res, next) {
     form,
   });
 };
+
+/* ****************************************
+*  Process Registration
+* *************************************** */
+accountCont.registerAccount = async function (req, res) {
+  let nav = await utilities.getNav()
+  const { account_firstname, account_lastname, account_email, account_password } = req.body
+
+  const regResult = await accountModel.registerAccount(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_password
+  )
+  console.log("datos:",regResult)
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Congratulations, you\'re registered ${account_firstname}. Please log in.`
+    )
+    const form = await utilities.loginForm();
+    res.status(201).render("account/login", {
+      
+      title: "Login",
+      nav,
+      form
+    })
+  } else {
+    req.flash("notice", "Sorry, the registration failed.")
+    const form = await utilities.registerForm();
+
+    res.status(501).render("account/register", {
+      title: "Registration",
+      nav,
+      form
+    })
+  }
+}
 
 module.exports = accountCont;
