@@ -115,54 +115,55 @@ Util.error500Page = async function (req, res, next) {
 };
 
 //login form
-Util.loginForm = async function () {
-  let form;
-  form = '<form id="login-form">';
-  form += '<label for="email"> email </label>';
-  form += '  <input id="email" name="account_email" type="email" required>';
+// Util.loginForm = async function () {
+//   let form;
+//   form = '<form id="loginForm" action="/account/login" method="post">';
+//   form += '<label for="email"> email </label>';
+//   form += '  <input id="email" name="account_email" type="email" required>';
 
-  form += '<label for="password"> Password </label>';
-  form += ' <input id="pword" name="account_password" type="password" required pattern="^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$" title="Password must be at least 12 characters long, include at least 1 uppercase letter, 1 number, and 1 special character.">';
+//   form += '<label for="password"> Password </label>';
+//   form +=
+//     ' <input id="pword" name="account_password" type="password" required pattern="^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$" title="Password must be at least 12 characters long, include at least 1 uppercase letter, 1 number, and 1 special character.">';
 
-  form += '<button id onClick="submit">Login</button>';
-  form += "</form>";
+//   form += '<button id onClick="submit">Login</button>';
+//   form += "</form>";
 
-  form += '<div class="sing-up-link">';
-  form += '<span>No account? <a href="/account/register">Sing-up</a></span>';
-  form += "</div>";
+//   form += '<div class="sing-up-link">';
+//   form += '<span>No account? <a href="/account/register">Sing-up</a></span>';
+//   form += "</div>";
 
-  return form;
-};
+//   return form;
+// };
 
 //register form
-Util.registerForm = async function () {
-  let form = `
-    <form id="login-form" action="/account/register" method="post">
-      <label for="firstName"> First Name </label>
-      <input id="firstName" name="account_firstname" type="text" required>
+// Util.registerForm = async function () {
+//   let form = `
+//     <form id="login-form" action="/account/register" method="post">
+//       <label for="firstName"> First Name </label>
+//       <input type="text" name="account_firstname" id="accountFirstname" required value="<%= locals.account_firstname %>">
 
-      <label for="lastName"> Last Name </label>
-      <input id="lastName" name="account_lastname" type="text" required>
+//       <label for="lastName"> Last Name </label>
+//       <input id="lastName" name="account_lastname" type="text" required value="<%= locals.account_lastname %>">
 
-      <label for="email"> Email Address </label>
-      <input id="email" name="account_email" type="email" required>
+//       <label for="email"> Email Address </label>
+//       <input id="email" name="account_email" type="email" required value="<%= locals.account_email %>">
 
-      <label for="password"> Password </label>
-      <input id="pword" name="account_password" type="password" required
-        pattern="^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$"
-        title="Password must be at least 12 characters long, include at least 1 uppercase letter, 1 number, and 1 special character.">
-      <span id="pswdBtn">Show Password</span>
+//       <label for="password"> Password </label>
+//       <input id="pword" name="account_password" type="password" required
+//         pattern="^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$"
+//         title="Password must be at least 12 characters long, include at least 1 uppercase letter, 1 number, and 1 special character.">
+//       <span id="pswdBtn">Show Password</span>
 
-      <button type="submit" id="register-btn">Register</button>
+//       <button type="submit" id="register-btn">Register</button>
 
-      <p id="password-error" style="color: red; display: none;">
-        Password must be at least 12 characters long, contain an uppercase letter, a number, and a special character.
-      </p>
-    </form>
-  `;
+//       <p id="password-error" style="color: red; display: none;">
+//         Password must be at least 12 characters long, contain an uppercase letter, a number, and a special character.
+//       </p>
+//     </form>
+//   `;
 
-  return form;
-};
+//   return form;
+// };
 
 /* ****************************************
  * Middleware For Handling Errors

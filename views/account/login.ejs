@@ -1,6 +1,42 @@
-<% if (title){ %>
-<h1> <%=title%></h1>
-<div id="login-form"> 
-    <%-form%>
-</div>
-<%} else {res.redirect('/')}%> <%# messages() %>
+<% if (title) { %>
+<h1><%= title %></h1>
+
+<!-- Login Form -->
+<form id="login-form" action="/account/login" method="post">
+  <!-- Email Field -->
+  <label for="email">Email</label>
+  <input
+    id="email"
+    name="account_email"
+    type="email"
+    required
+    value="<%= locals.account_email %>"
+  />
+
+  <!-- Password Field -->
+  <label for="password">Password</label>
+  <input
+    id="pword"
+    name="account_password"
+    type="password"
+    required
+    pattern="^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$"
+    title="Password must be at least 12 characters long, include at least 1 uppercase letter, 1 number, and 1 special character."
+  />
+
+  <!-- Submit Button -->
+  <button type="submit">Login</button>
+  <div class="sign-up-link">
+    <span>No account? <a href="/account/register">Sign-up</a></span>
+  </div>
+</form>
+
+<!-- Sign Up Link -->
+
+<% } else { res.redirect('/'); } %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>

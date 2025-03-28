@@ -60,7 +60,6 @@ validate.registationRules = () => {
  * ***************************** */
 validate.checkRegData = async (req, res, next) => {
   const { account_firstname, account_lastname, account_email } = req.body;
-  const form = await utilities.registerForm();
 
   let errors = [];
   errors = validationResult(req);
@@ -73,7 +72,6 @@ validate.checkRegData = async (req, res, next) => {
       account_firstname,
       account_lastname,
       account_email,
-      form,
     });
     return;
   }

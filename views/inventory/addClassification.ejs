@@ -1,0 +1,32 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+
+<!-- Registration Form -->
+<div class="form-classification-wrapper">
+  <h2>Field is Required.</h2>
+  <form id="add-classification-form" action="" method="post">
+    <h3>Classification Name</h3>
+    <h3>Name must be alphabetic characters only</h3>
+    <label for="classificationName ">First Name</label>
+    <input
+      type="text"
+      name="classification_name"
+      id="classificationName "
+      required
+      pattern="^[A-Za-z]+$"
+      title="the new classification name cannot contain a space or special character of any kind"
+      value="<%= locals.classification_name %>"
+    />
+
+    <button type="submit" id="register-btn">Register</button>
+  </form>
+</div>
+<!-- Sign Up Link -->
+
+<% } else { res.redirect('/'); } %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>

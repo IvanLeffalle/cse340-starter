@@ -38,4 +38,4 @@ async function checkExistingEmail(account_email) {
   }
 }
 
-module.exports = { registerAccount };
+module.exports = { registerAccount, checkExistingEmail };
