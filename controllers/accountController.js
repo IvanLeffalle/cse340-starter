@@ -1,7 +1,6 @@
 const utilities = require("../utilities");
 const accountCont = {};
 const accountModel = require("../models/account-model");
-const classificationModel =require ("../models/inventory-model")
 accountCont.buildLogin = async function (req, res, next) {
   let nav = await utilities.getNav();
   // const form = await utilities.loginForm();
@@ -62,24 +61,6 @@ accountCont.registerAccount = async function (req, res) {
   }
 };
 
-accountCont.addClassification = async function (req, res) {
-  let nav = await utilities.getNav();
-  const { classification_name } = req.body;
-
-  try {
-    const classificationResult = await classificationModel.addClassification(classification_name);
-    
-    if (classificationResult.rowCount > 0) { 
-      req.flash("notice", `Congratulations, you\'re registered ${classification_name}.`);
-    } else {
-      req.flash("notice", "Sorry, the registration failed.");
-    }
-    res.redirect("/"); 
-  } catch (error) {
-    req.flash("notice", "An error occurred while registering.");
-    res.redirect("/"); 
-  }
-};
 
 
 module.exports = accountCont;

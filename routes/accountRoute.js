@@ -24,11 +24,6 @@ router.post("/login", (req, res) => {
   res.status(200).send("login process");
 });
 
-router.post("/addClassification",
-  regValidate.classificationRules(),
-  regValidate.checkClassData,
-utilities.handleErrors(accountController.addClassification)
-);
 
 
 

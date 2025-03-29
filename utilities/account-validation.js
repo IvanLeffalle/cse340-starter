@@ -110,6 +110,85 @@ validate.checkClassData = async (req, res, next) => {
   next();
 };
 
+validate.vehicleRules = () => {
+  return [
+    body("classification_id")
+      .trim()
+      .notEmpty()
+      .isInt()
+      .withMessage("Classification ID is required and must be an integer."),
+    
+    body("inv_make")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a valid make (at least 2 characters)."),
+    
+    body("inv_model")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a valid model (at least 2 characters)."),
+    
+    body("inv_description")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Description is required."),
+    
+    body("inv_image")
+      .trim()
+      .notEmpty()
+      .withMessage("Image URL is required."),
+    
+    body("inv_thumbnail")
+      .trim()
+      .notEmpty()
+      .withMessage("Thumbnail URL is required."),
+    
+    body("inv_price")
+      .trim()
+      .notEmpty()
+      .isFloat({ min: 0 })
+      .withMessage("Price must be a valid number greater than or equal to 0."),
+    
+    body("inv_year")
+      .trim()
+      .notEmpty()
+      .isInt({ min: 1886, max: new Date().getFullYear() })
+      .withMessage("Please provide a valid year."),
+    
+    body("inv_miles")
+      .trim()
+      .notEmpty()
+      .isInt({ min: 0 })
+      .withMessage("Miles must be a valid number greater than or equal to 0."),
+    
+    body("inv_color")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Color is required."),
+  ];
+};
+
+validate.checkVehicleData = async (req, res, next) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    let dropdown = await utilities.buildClassificationList();
+    return res.render("./inventory/addInventory", {
+      title: "Add New Inventory",
+      nav,
+      dropdown,
+      errors,
+      ...req.body
+    });
+  }
+  next();
+};
 
 
 module.exports = validate;

@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
+const classificationModel =require ("../models/inventory-model")
 
 const invCont = {};
 
@@ -57,10 +58,82 @@ invCont.buildAddClassification = async function (req, res, next) {
 
 invCont.buidAddInv = async function (req,res,next){
   let nav=await utilities.getNav();
+  let dropdown = await utilities.buildClassificationList()
   res.render("./inventory/addInventory",{
-    title:"Add NEw Inventory",
+    title:"Add New Inventory",
     nav,
+    dropdown,
     errors: null,
   })
 }
+
+
+invCont.addClassification = async function (req, res) {
+  let nav = await utilities.getNav();
+  const { classification_name } = req.body;
+
+  try {
+    const classificationResult = await classificationModel.addClassification(classification_name);
+    
+    if (classificationResult.rowCount > 0) { 
+      req.flash("notice", `Congratulations, you\'re registered ${classification_name}.`);
+    } else {
+      req.flash("notice", "Sorry, the registration failed.");
+    }
+    res.redirect("/"); 
+  } catch (error) {
+    req.flash("notice", "An error occurred while registering.");
+    res.redirect("/"); 
+  }
+};
+
+invCont.addVehicle = async function (req, res) {
+  let nav = await utilities.getNav();
+  const {
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color
+  } = req.body;
+  
+  try {
+    const addResult = await invModel.addInventory(
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color
+    );
+    
+    if (addResult.rowCount > 0) {
+      req.flash("notice", `The ${inv_make} ${inv_model} was successfully added.`);
+    } else {
+      req.flash("notice", "Sorry, the addition failed.");
+    }
+    res.redirect("/inv/");
+    
+  } catch (error) {
+    console.error("Error in addVehicle:", error);
+    const dropdown = await utilities.buildClassificationList();
+    req.flash("notice", "An error occurred while adding the vehicle.");
+    res.status(500).render("./inventory/addInventory", {
+      title: "Add New Inventory",
+      nav,
+      dropdown,
+      errors: null,
+      ...req.body
+    });
+  }
+};
 module.exports = invCont;

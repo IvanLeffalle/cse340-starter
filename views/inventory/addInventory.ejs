@@ -3,14 +3,11 @@
     <!-- Vehicle Form -->
     <div class="form-vehicle-wrapper">
       <div class="form-header">ALL FIELDS ARE REQUIRED.</div>
-      <form id="add-vehicle-form" action="/inventory/add-vehicle" method="post">
+      <form id="add-vehicle-form" action="/inv/addVehicle" method="post">
         <div class="form-group">
           <label for="classification">Classification</label>
-          <select name="classification_id" id="classification" required>
-            <option value="newcar">newcar</option>
-          </select>
+          <%-dropdown%>
         </div>
-    
         <div class="form-group">
           <label for="make">Make</label>
           <input
