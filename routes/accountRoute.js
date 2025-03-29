@@ -23,4 +23,9 @@ router.post(
 router.post("/login", (req, res) => {
   res.status(200).send("login process");
 });
+
+router.post("/addClassification",
+utilities.handleErrors(accountController.addClassification)
+);
+
 module.exports = router;
