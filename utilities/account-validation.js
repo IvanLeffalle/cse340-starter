@@ -2,6 +2,7 @@ const utilities = require(".");
 const { body, validationResult } = require("express-validator");
 const validate = {};
 const accountModel = require("../models/account-model");
+const classificationModel = require("../models/inventory-model");
 /*  **********************************
  *  Registration Data Validation Rules
  * ********************************* */
@@ -77,5 +78,38 @@ validate.checkRegData = async (req, res, next) => {
   }
   next();
 };
+
+validate.classificationRules = () => {
+  return [
+    body("classification_name")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a classification name.")
+      .matches(/^[A-Za-z]+$/)
+      .withMessage("The classification name cannot contain spaces or special characters.")
+  
+  ];
+};
+
+validate.checkClassData = async (req, res, next) => {
+  const { classification_name } = req.body;
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    return res.render("inventory/addClassification", { 
+      errors,
+      title: "Add Classification",
+      nav,
+      classification_name,
+    });
+  }
+
+  next();
+};
+
+
 
 module.exports = validate;

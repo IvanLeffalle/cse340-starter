@@ -23,4 +23,8 @@ router.get(
   utilities.handleErrors(invController.buildAddClassification)
 );
 
+router.get(
+  "/addinventory",
+  utilities.handleErrors(invController.buidAddInv)
+);
 module.exports = router;

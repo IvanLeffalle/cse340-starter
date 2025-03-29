@@ -296,6 +296,66 @@ span {
 #add-classification-form button:hover {
   background-color: var(--secondary-color);
 }
+/*inventory add*/
+  .form-vehicle-wrapper {
+    background-color: #2596be;
+    padding: 20px;
+    color: white;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+
+  .form-header {
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    height: 80px;
+    resize: vertical;
+  }
+
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  .notice {
+    color: red;
+    background-color: #ffeeee;
+    padding: 10px;
+    border-radius: 4px;
+    list-style-position: inside;
+  }
 /*Media queries*/
 /* Mobile Devices (up to 600px) */
 @media only screen and (max-width: 600px) {

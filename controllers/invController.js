@@ -55,4 +55,12 @@ invCont.buildAddClassification = async function (req, res, next) {
   });
 };
 
+invCont.buidAddInv = async function (req,res,next){
+  let nav=await utilities.getNav();
+  res.render("./inventory/addInventory",{
+    title:"Add NEw Inventory",
+    nav,
+    errors: null,
+  })
+}
 module.exports = invCont;

@@ -25,7 +25,11 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/addClassification",
+  regValidate.classificationRules(),
+  regValidate.checkClassData,
 utilities.handleErrors(accountController.addClassification)
 );
+
+
 
 module.exports = router;
