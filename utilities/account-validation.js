@@ -190,5 +190,43 @@ validate.checkVehicleData = async (req, res, next) => {
   next();
 };
 
+//login validation
+validate.loginRules = () => {
+  return [
+    // Email must be valid and not empty
+    body("account_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required."),
+    
+    // Password must be at least 12 characters, contain at least one uppercase letter, one number, and one special character
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/)
+      .withMessage(
+        "Password must be at least 12 characters long, include at least 1 uppercase letter, 1 number, and 1 special character."
+      ),
+  ];
+};
+
+validate.checkLoginData = async (req, res, next) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    return res.render("account/login", {
+      errors,
+      title: "Login",
+      nav,
+      account_email: req.body.account_email || "",
+    });
+  }
+  next();
+};
+
+
 
 module.exports = validate;
