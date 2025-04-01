@@ -23,6 +23,7 @@ const cookieParser = require("cookie-parser")
 /* ************************
  * Middleware
  * *************************/
+
 app.use(
   session({
     store: new (require("connect-pg-simple")(session))({
@@ -47,9 +48,9 @@ app.use(function (req, res, next) {
 });
 
 app.use(cookieParser())
-
-
 app.use(utilities.checkJWTToken)
+
+
 
 /* ***********************
  * View Engine and Templates
