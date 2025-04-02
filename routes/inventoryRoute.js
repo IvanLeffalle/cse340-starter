@@ -47,4 +47,12 @@ router.post(
   utilities.handleErrors(invController.addVehicle)
 );
 
+//week 5 route to updated veh
+router.post(
+  "/update/",
+  regValidate.vehicleRules(),
+  regValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+);
+
 module.exports = router;

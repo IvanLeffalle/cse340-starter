@@ -130,6 +130,62 @@ invCont.buildEditInv = async function (req, res, next) {
 };
 
 /* ***************************
+ *  Update Inventory Data
+ * ************************** */
+
+invCont.updateVehicle = async function (req, res) {
+  let nav = await utilities.getNav();
+  const {
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+  } = req.body;
+
+  try {
+    const updateResult = await invModel.updateInventory(
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color
+    );
+
+    if (updateResult.rowCount > 0) {
+      req.flash(
+        "notice",
+        `The ${inv_make} ${inv_model} was successfully added.`
+      );
+    } else {
+      req.flash("notice", "Sorry, the addition failed.");
+    }
+    res.redirect("/inv/");
+  } catch (error) {
+    console.error("Error in addVehicle:", error);
+    const dropdown = await utilities.buildClassificationList();
+    req.flash("notice", "An error occurred while adding the vehicle.");
+    res.status(500).render("./inventory/addInventory", {
+      title: "Add New Inventory",
+      nav,
+      dropdown,
+      errors: null,
+      ...req.body,
+    });
+  }
+};
+
+/* ***************************
  *  Return Inventory by Classification As JSON
  * ************************** */
 invCont.getInventoryJSON = async (req, res, next) => {
