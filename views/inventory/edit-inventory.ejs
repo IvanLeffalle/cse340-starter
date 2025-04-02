@@ -3,7 +3,7 @@
 <!-- Vehicle Form -->
 <div class="form-vehicle-wrapper">
   <div class="form-header">ALL FIELDS ARE REQUIRED.</div>
-  <form action="/inv/update" method="post">
+  <form id="updateForm" action="/inv/update" method="post">
     <div class="form-group">
       <label for="classification">Classification</label>
       <%-classificationSelect%>
@@ -103,10 +103,11 @@
       />
     </div>
 
-    <button type="submit">Update Vehicle</button>
-    <input type="hidden" name="inv_id" <% if(locals.inv_id) { % /> value="<%=
-    locals.inv_id %>" <% } %>>
+    <button disabled type="submit">Update Vehicle</button>
+    <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %>>
+
   </form>
+  
 </div>
 
 <% } else { res.redirect('/'); } %> <% if (errors) { %>
@@ -116,3 +117,5 @@
   <% }) %>
 </ul>
 <% } %>
+
+<script src="../../js/inv-update.js"></script>

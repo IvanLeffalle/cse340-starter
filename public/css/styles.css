@@ -444,6 +444,9 @@ span {
   }
 }
 
+:disabled{
+  background-color: var(--secondary-color);
+color: gray;}
 /* Desktops (768px and up) */
 @media only screen and (min-width: 769px) {
   body {

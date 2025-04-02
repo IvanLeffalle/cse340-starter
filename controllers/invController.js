@@ -133,7 +133,7 @@ invCont.buildEditInv = async function (req, res, next) {
  *  Update Inventory Data
  * ************************** */
 
-invCont.updateVehicle = async function (req, res) {
+invCont.updateInventory = async function (req, res) {
   let nav = await utilities.getNav();
   const {
     classification_id,
@@ -146,6 +146,7 @@ invCont.updateVehicle = async function (req, res) {
     inv_year,
     inv_miles,
     inv_color,
+    inv_id,
   } = req.body;
 
   try {
@@ -159,13 +160,14 @@ invCont.updateVehicle = async function (req, res) {
       inv_price,
       inv_year,
       inv_miles,
-      inv_color
+      inv_color,
+      inv_id,
     );
 
     if (updateResult.rowCount > 0) {
       req.flash(
         "notice",
-        `The ${inv_make} ${inv_model} was successfully added.`
+        `The ${inv_make} ${inv_model} was successfully updated.`
       );
     } else {
       req.flash("notice", "Sorry, the addition failed.");

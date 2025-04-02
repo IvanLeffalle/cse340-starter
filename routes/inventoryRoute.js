@@ -49,7 +49,7 @@ router.post(
 
 //week 5 route to updated veh
 router.post(
-  "/update/",
+  "/update",
   regValidate.vehicleRules(),
   regValidate.checkUpdateData,
   utilities.handleErrors(invController.updateInventory)
