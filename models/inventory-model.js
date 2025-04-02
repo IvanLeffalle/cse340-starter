@@ -26,6 +26,7 @@ async function getInventoryByClassificationId(classification_id) {
     console.error("getclassificationsbyid error " + error);
   }
 }
+
 async function getInventoryByInvId(inv_id) {
   try {
     const data = await pool.query(
@@ -37,6 +38,7 @@ async function getInventoryByInvId(inv_id) {
     console.error("getInventoryByInvId error " + error);
   }
 }
+
 async function addClassification(classification_name) {
   try {
     const sql = "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *";

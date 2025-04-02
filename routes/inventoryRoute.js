@@ -16,6 +16,14 @@ router.get(
   utilities.handleErrors(invController.buildByInvId)
 );
 
+//week 5
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
+router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInv));
+
 router.get("/", utilities.handleErrors(invController.buildInvManagement));
 
 router.get(
@@ -23,21 +31,20 @@ router.get(
   utilities.handleErrors(invController.buildAddClassification)
 );
 
-router.get(
-  "/addinventory",
-  utilities.handleErrors(invController.buidAddInv)
-);
+router.get("/addinventory", utilities.handleErrors(invController.buidAddInv));
 
-router.post("/addClassification",
+router.post(
+  "/addClassification",
   regValidate.classificationRules(),
   regValidate.checkClassData,
-utilities.handleErrors(invController.addClassification)
+  utilities.handleErrors(invController.addClassification)
 );
 
-
-router.post("/addVehicle",
+router.post(
+  "/addVehicle",
   regValidate.vehicleRules(),
   regValidate.checkVehicleData,
-utilities.handleErrors(invController.addVehicle));
+  utilities.handleErrors(invController.addVehicle)
+);
 
 module.exports = router;
