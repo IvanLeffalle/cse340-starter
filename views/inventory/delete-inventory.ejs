@@ -1,0 +1,80 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<!-- Vehicle Form -->
+<div class="form-vehicle-wrapper">
+  <div class="form-header">ALL FIELDS ARE REQUIRED.</div>
+  <form id="deleteForm" action="/inv/delete" method="post" onsubmit="return confirmDelete()">
+    <div class="form-group">
+      <label for="classification">Classification</label>
+      <%-classificationSelect%>
+    </div>
+
+    <div class="form-group">
+      <label for="make">Make</label>
+      <input
+        type="text"
+        name="inv_make"
+        id="make"
+        required
+        value="<%= locals.inv_make || '' %>"
+        readonly
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="model">Model</label>
+      <input
+        type="text"
+        name="inv_model"
+        id="model"
+        required
+        value="<%= locals.inv_model || '' %>"
+        readonly
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input
+        type="number"
+        name="inv_price"
+        id="price"
+        required
+        value="<%= locals.inv_price || '' %>"
+        readonly
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="year">Year</label>
+      <input
+        type="number"
+        name="inv_year"
+        id="year"
+        required
+        value="<%= locals.inv_year || '' %>"
+        readonly
+      />
+    </div>
+
+    <button type="submit">Delete Vehicle</button>
+    <input type="hidden" name="inv_id" value="<%= locals.inv_id || '' %>">
+
+  </form>
+</div>
+
+</div>
+
+<% } else { res.redirect('/'); } %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+<script>
+    function confirmDelete() {
+      return confirm("Are you sure you want to delete this vehicle? This action cannot be undone.");
+    }
+  </script>
+  

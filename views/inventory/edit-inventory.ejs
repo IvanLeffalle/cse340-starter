@@ -104,10 +104,8 @@
     </div>
 
     <button disabled type="submit">Update Vehicle</button>
-    <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %>>
-
+    <input type="hidden" name="inv_id" value="<%= locals.inv_id || '' %>" />
   </form>
-  
 </div>
 
 <% } else { res.redirect('/'); } %> <% if (errors) { %>

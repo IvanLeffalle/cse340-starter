@@ -1,7 +1,6 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
 const classificationModel = require("../models/inventory-model");
-
 const invCont = {};
 
 /* ***************************
@@ -134,6 +133,12 @@ invCont.buildEditInv = async function (req, res, next) {
  * ************************** */
 
 invCont.updateInventory = async function (req, res) {
+  const itemData = await invModel.getInventoryByInvId(req.body.inv_id);
+  const item = itemData.length > 0 ? itemData[0] : {};
+  const classificationSelect = await utilities.buildClassificationList(
+    item.classification_id
+  );
+
   let nav = await utilities.getNav();
   const {
     classification_id,
@@ -161,13 +166,79 @@ invCont.updateInventory = async function (req, res) {
       inv_year,
       inv_miles,
       inv_color,
-      inv_id,
+      inv_id
     );
 
     if (updateResult.rowCount > 0) {
       req.flash(
         "notice",
         `The ${inv_make} ${inv_model} was successfully updated.`
+      );
+    } else {
+      req.flash("notice", "Sorry, the addition failed.");
+    }
+    res.redirect("/inv/");
+  } catch (error) {
+    console.error("Error in addVehicle:", error);
+    const dropdown = await utilities.buildClassificationList();
+    req.flash("notice", "An error occurred while adding the vehicle.");
+    res.status(500).render("./inventory/addInventory", {
+      title: "Add New Inventory",
+      nav,
+      dropdown,
+      errors: null,
+      ...req.body,
+    });
+  }
+};
+
+/* ***************************
+ *  Delete Inventory View
+ * ************************** */
+invCont.buildDeleteInventory = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id);
+  console.log("inventario id", inv_id);
+  let nav = await utilities.getNav();
+  const itemData = await invModel.getInventoryByInvId(inv_id);
+  const item = itemData[0];
+  const classificationSelect = await utilities.buildClassificationList(
+    item.classification_id
+  );
+
+  let itemName = `delete ${item.inv_make} ${item.inv_model}`;
+
+  res.render("./inventory/delete-inventory", {
+    title: itemName,
+    nav,
+    classificationSelect: classificationSelect,
+    errors: null,
+    inv_id: item.inv_id,
+    inv_make: item.inv_make,
+    inv_model: item.inv_model,
+    inv_year: item.inv_year,
+    inv_description: item.inv_description,
+    inv_image: item.inv_image,
+    inv_thumbnail: item.inv_thumbnail,
+    inv_price: item.inv_price,
+    inv_miles: item.inv_miles,
+    inv_color: item.inv_color,
+    classification_id: item.classification_id,
+  });
+};
+/* ***************************
+ *  Delete Inventory Data
+ * ************************** */
+invCont.deleteInventory = async function (req, res) {
+  let nav = await utilities.getNav();
+  const { inv_make, inv_model, inv_id } = req.body;
+
+  try {
+    const updateResult = await invModel.deleteInventory(inv_id);
+
+    if (updateResult.rowCount > 0) {
+      req.flash(
+        "notice",
+        `The ${inv_make} ${inv_model} was successfully deleted.`
       );
     } else {
       req.flash("notice", "Sorry, the addition failed.");
