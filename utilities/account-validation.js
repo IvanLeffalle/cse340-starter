@@ -193,11 +193,11 @@ validate.checkUpdateData = async (req, res, next) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
-    let dropdown = await utilities.buildClassificationList();
+    let classificationSelect = await utilities.buildClassificationList();
     return res.render("./inventory/edit-inventory", {
       title: "Edit Inventory",
       nav,
-      dropdown,
+      classificationSelect,
       errors,
       inv_id,
       ...req.body,

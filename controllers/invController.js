@@ -133,12 +133,6 @@ invCont.buildEditInv = async function (req, res, next) {
  * ************************** */
 
 invCont.updateInventory = async function (req, res) {
-  const itemData = await invModel.getInventoryByInvId(req.body.inv_id);
-  const item = itemData.length > 0 ? itemData[0] : {};
-  const classificationSelect = await utilities.buildClassificationList(
-    item.classification_id
-  );
-
   let nav = await utilities.getNav();
   const {
     classification_id,
@@ -155,6 +149,7 @@ invCont.updateInventory = async function (req, res) {
   } = req.body;
 
   try {
+    console.log("trying to update")
     const updateResult = await invModel.updateInventory(
       classification_id,
       inv_make,
