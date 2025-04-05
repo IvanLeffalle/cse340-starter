@@ -232,13 +232,14 @@ validate.loginRules = () => {
 
 validate.checkLoginData = async (req, res, next) => {
   let errors = validationResult(req);
-  if (!errors.isEmpty()) {
+    const header = await utilities.getHeader(req, res);  if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
-    return res.render("account/login", {
-      errors,
-      title: "Login",
+    return res.render("./account/account", {
+      title: "Welcome!",
+      message:"You're logged in",
       nav,
-      account_email: req.body.account_email || "",
+      header,
+      errors: null,
     });
   }
   next();

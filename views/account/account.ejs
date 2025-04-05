@@ -1,11 +1,25 @@
 <% if (title) { %>
-<h1><%= title %></h1>
-<p><%= message %></p>
-<a href="/">Go Home</a>
-<% } else { res.redirect('/'); } %> <% if (errors) { %>
-<ul class="notice">
-  <% errors.array().forEach(error => { %>
-  <li><%= error.msg %></li>
-  <% }) %>
-</ul>
+  <h1><%= title %></h1>
+  <p><%= message %></p>
+
+  <!-- Enlace para actualizar información de cuenta (para todos los usuarios) -->
+  <p>
+    <a href="/account/update-account">Update account information</a>
+  </p>
+
+  <!-- Solo para Admin o Employee -->
+  <% if (accountData.account_type === "Admin" || accountData.account_type === "Employee") { %>
+    <h3>Inventory Management</h3>
+    <p><a href="/inv">Go to Inventory Management</a></p>
+  <% } %>
+
+<% } %>
+
+<!-- Mostrar errores si los hay -->
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
 <% } %>

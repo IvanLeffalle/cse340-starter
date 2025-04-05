@@ -28,6 +28,11 @@ router.post("/login",
 
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccount));
 
+router.get("/management", utilities.handleErrors(accountController.buildAccount));
 
+router.get("/update-account", utilities.handleErrors(accountController.buildUpdateAccount));
+
+router.post("/update-account", utilities.handleErrors(accountController.updateAccount));
+router.post("/update-password", utilities.handleErrors(accountController.updatePassword));
 
 module.exports = router;

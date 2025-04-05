@@ -22,16 +22,16 @@ router.get(
   utilities.handleErrors(invController.getInventoryJSON)
 );
 
-router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInv));
+router.get("/edit/:inv_id",utilities.checkLogin, utilities.checkAccountType, utilities.handleErrors(invController.buildEditInv));
 
-router.get("/", utilities.handleErrors(invController.buildInvManagement));
+router.get("/",utilities.checkLogin, utilities.checkAccountType,utilities.handleErrors(invController.buildInvManagement));
 
 router.get(
   "/addclassification",
   utilities.handleErrors(invController.buildAddClassification)
 );
 
-router.get("/addinventory", utilities.handleErrors(invController.buidAddInv));
+router.get("/addinventory",utilities.checkLogin, utilities.checkAccountType, utilities.handleErrors(invController.buidAddInv));
 
 router.post(
   "/addClassification",

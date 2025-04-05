@@ -7,21 +7,24 @@ require("dotenv").config()
 
 accountCont.buildLogin = async function (req, res, next) {
   let nav = await utilities.getNav();
-  // const form = await utilities.loginForm();
+  const header = await utilities.getHeader(req, res);  // const form = await utilities.loginForm();
   res.render("./account/login", {
     title: "Login",
     nav,
     errors: null,
+    header
     // form,
   });
 };
 
 accountCont.buildRegister = async function (req, res, next) {
   let nav = await utilities.getNav();
+  const header = await utilities.getHeader(req, res);
   res.render("./account/register", {
     title: "Register",
     nav,
     errors: null,
+    header
   });
 };
 
@@ -30,7 +33,7 @@ accountCont.buildRegister = async function (req, res, next) {
  * *************************************** */
 accountCont.registerAccount = async function (req, res) {
   let nav = await utilities.getNav();
-  const {
+const header = await utilities.getHeader(req, res);  const {
     account_firstname,
     account_lastname,
     account_email,
@@ -48,6 +51,7 @@ accountCont.registerAccount = async function (req, res) {
     res.status(500).render("./account/register", {
       title: "Registration",
       nav,
+      header,
       errors: null,
     })
   }
@@ -65,9 +69,11 @@ accountCont.registerAccount = async function (req, res) {
       `Congratulations, you\'re registered ${account_firstname}. Please log in.`
     );
     // const form = await utilities.loginForm();
+    
     res.status(201).render("account/login", {
       title: "Login",
       nav,
+      header,
       errors:null,
 
       // form,
@@ -78,6 +84,7 @@ accountCont.registerAccount = async function (req, res) {
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
+      header,
       errors:null,
     });
   }
@@ -88,15 +95,17 @@ accountCont.registerAccount = async function (req, res) {
  * ************************************ */
 accountCont.accountLogin = async function (req, res) {
   let nav = await utilities.getNav()
-  const { account_email, account_password } = req.body
+const header = await utilities.getHeader(req, res);  const { account_email, account_password } = req.body
   const accountData = await accountModel.getAccountByEmail(account_email)
   if (!accountData) {
     req.flash("notice", "Please check your credentials and try again.")
     res.status(400).render("account/login", {
       title: "Login",
       nav,
+      header,
       errors: null,
       account_email,
+      message,
     })
     return
   }
@@ -109,18 +118,14 @@ accountCont.accountLogin = async function (req, res) {
       } else {
         res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
       }
-      return res.render("./account/account", {
-        title: "Welcome!",
-        message:"You're logged in",
-        nav,
-        errors: null,
-      });
+      return res.redirect("/account/")
     }
     else {
       req.flash("message notice", "Please check your credentials and try again.")
-      res.status(400).render("account/login", {
+      res.status(400).render("./account/login", {
         title: "Login",
         nav,
+        header,
         errors: null,
         account_email,
       })
@@ -130,14 +135,110 @@ accountCont.accountLogin = async function (req, res) {
   }
 }
 
-accountCont.buildAccount = async function (res,req,next){
+accountCont.buildAccount = async function (req, res, next){
   let nav = await utilities.getNav();
+  let accountData = res.locals.accountData;
+  let name = accountData.account_firstname;
+  const header = await utilities.getHeader(req, res);  
   res.render("./account/account", {
-    title: "Welcome!",
+    title: `Welcome ${name}`,
     message:"You're logged in",
     nav,
+    header,
     errors: null,
   });
 };
+
+accountCont.buildUpdateAccount = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  let accountData = res.locals.accountData;
+  const header = await utilities.getHeader(req, res);
+  res.render("./account/updateAccount", {
+    title: `Welcome`,
+    message: "You're logged in",
+    nav,
+    header,
+    errors: null,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+    account_id: accountData.account_id
+  });
+};
+
+/* ****************************************
+ *  request to update account 
+ * ************************************ */
+accountCont.updateAccount = async function (req, res) {
+  let nav = await utilities.getNav()
+  const header = await utilities.getHeader(req, res);
+  const { account_firstname, account_lastname, account_email, account_id } = req.body
+
+  const updateResult = await accountModel.updateAccount(
+    account_firstname,
+    account_lastname,
+    account_email,
+    parseInt(account_id)
+  )
+
+  if (updateResult) {
+    req.flash(
+      "notice",
+      `Congratulations, you\'re updated ${account_firstname}. Please sign in.`
+    )
+    res.clearCookie("jwt")
+    res.locals.loggedin = 0
+    res.status(201).render("account/login", {
+      title: "Login",
+      nav,
+      loggedin: res.locals.loggedin, 
+      accountData: res.locals.accountData,
+      errors: null,
+      header
+    })
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("account/update-account", {
+      title: "Update Account",
+      nav,
+      loggedin: res.locals.loggedin, 
+      accountData: res.locals.accountData,
+      errors: null,
+      header
+    })
+  }
+}
+
+/* ****************************************
+ *  request to update password account 
+ * ************************************ */
+accountCont.updatePassword = async function (req, res) {
+  
+    const { account_password, account_id } = req.body
+    const hashedPassword = await bcrypt.hash(account_password, 10)
+    const updateResult = await accountModel.updateAccountPassword(
+      hashedPassword,
+      parseInt(account_id)
+    )
+    if (updateResult) {
+      req.flash("notice", "Password updated successfully. Please sign in.")
+      res.clearCookie("jwt")
+      res.locals.loggedin = 0
+      res.status(201).redirect("/account/login")
+    }
+    else {
+      req.flash("notice", "Sorry, the update failed.")
+      res.status(501).render("account/update-account", {
+        title: "Update Account",
+        nav,
+        loggedin: res.locals.loggedin, 
+        accountData: res.locals.accountData,
+        errors: null,
+        header
+      })
+    }
+}
+
+
 
 module.exports = accountCont;

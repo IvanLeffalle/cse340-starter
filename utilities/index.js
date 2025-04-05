@@ -5,7 +5,7 @@ require("dotenv").config();
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
+Util.getNav = async function () {
   let data = await invModel.getClassifications();
   let list = "<ul>";
   list += '<li><a href="/" title="Home page">Home</a></li>';
@@ -24,6 +24,31 @@ Util.getNav = async function (req, res, next) {
   list += "</ul>";
   return list;
 };
+
+Util.getHeader = async function (req, res) {
+  let loggedin = res.locals.loggedin;
+  let accountData = res.locals.accountData;
+  let header = '<header id="top-header">';
+  
+  header += '<span class="siteName">';
+  header += '<a href="/" title="Return to home page">CSE Motors</a>';
+  header += '</span>';
+  
+  header += '<div id="tools">';
+  
+  if (loggedin && accountData) {
+    header += `<a href="/account/" title="Account Management">Welcome ${accountData.account_firstname}</a>`;
+    header += '<a href="/account/logout" title="Log Out"> Logout</a>';
+  } else {
+    header += '<a href="/account/login" title="Click to log in">My Account</a>';
+  }
+
+  header += '</div>';
+  header += '</header>';
+
+  return header;
+};
+
 
 /* **************************************
  * Build the classification view HTML
@@ -227,4 +252,26 @@ Util.checkLogin = (req, res, next) => {
     return res.redirect("/account/login");
   }
 };
+
+/**
+ * Middleware to check if user has "Employee" or "Admin" account type.
+ */
+Util.checkAccountType = (req, res, next) => {
+  const accountData = res.locals.accountData;
+
+  if (!accountData) {
+    req.flash("notice", "Please log in.");
+    return res.redirect("/account/login");
+  }
+
+  const { account_type } = accountData;
+
+  if (account_type === "Employee" || account_type === "Admin") {
+    return next(); 
+  }
+
+  req.flash("notice", "You are not authorized to access that resource.");
+  return res.redirect("/account/login");
+};
+
 module.exports = Util;
