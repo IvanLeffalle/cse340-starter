@@ -55,6 +55,7 @@ async function getAccountByEmail (account_email) {
 * ***************************** */
 async function updateAccount(account_firstname, account_lastname, account_email, account_id) {
   try {
+    console.log("attempting to update")
     const sql = "UPDATE account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *"
     return await pool.query(sql, [account_firstname, account_lastname, account_email, account_id]);
   } catch (error) {

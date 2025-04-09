@@ -30,9 +30,14 @@ router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.b
 
 router.get("/management", utilities.handleErrors(accountController.buildAccount));
 
-router.get("/update-account", utilities.handleErrors(accountController.buildUpdateAccount));
+router.get("/update-account",  utilities.handleErrors(accountController.buildUpdateAccount));
 
-router.post("/update-account", utilities.handleErrors(accountController.updateAccount));
+router.post("/update-account",regValidate.updateAccountRules (), regValidate.checkUpdateAccountData ,  utilities.handleErrors(accountController.updateAccount));
 router.post("/update-password", utilities.handleErrors(accountController.updatePassword));
+
+router.get(
+  "/logout",
+  utilities.handleErrors(accountController.accountLogout)
+)
 
 module.exports = router;

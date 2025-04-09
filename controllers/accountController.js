@@ -182,6 +182,7 @@ accountCont.updateAccount = async function (req, res) {
   )
 
   if (updateResult) {
+    console.log("the info has been u´dated")
     req.flash(
       "notice",
       `Congratulations, you\'re updated ${account_firstname}. Please sign in.`
@@ -198,7 +199,7 @@ accountCont.updateAccount = async function (req, res) {
     })
   } else {
     req.flash("notice", "Sorry, the update failed.")
-    res.status(501).render("account/update-account", {
+    res.status(501).render("account/updateAccount", {
       title: "Update Account",
       nav,
       loggedin: res.locals.loggedin, 
@@ -228,7 +229,7 @@ accountCont.updatePassword = async function (req, res) {
     }
     else {
       req.flash("notice", "Sorry, the update failed.")
-      res.status(501).render("account/update-account", {
+      res.status(501).render("account/updateAccount", {
         title: "Update Account",
         nav,
         loggedin: res.locals.loggedin, 
@@ -239,6 +240,13 @@ accountCont.updatePassword = async function (req, res) {
     }
 }
 
-
+/* ****************************************
+ *  Process to logout
+ * ************************************ */
+accountCont.accountLogout = async function (req, res) {
+  req.flash("notice", "You have been logged out.")
+  res.clearCookie("jwt")
+  return res.redirect("/")
+}
 
 module.exports = accountCont;

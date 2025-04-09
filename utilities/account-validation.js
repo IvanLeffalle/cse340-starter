@@ -245,4 +245,79 @@ validate.checkLoginData = async (req, res, next) => {
   next();
 };
 
+validate.updateAccountRules = () => {
+  return [
+    // First Name
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a first name."),
+
+    // Last Name
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a last name."),
+
+    // Email
+    body("account_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required.")
+  ];
+};
+
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const { account_firstname, account_lastname, account_email, account_id } = req.body;
+  let errors = validationResult(req);
+  const header = await utilities.getHeader(req, res); 
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    return res.render("./account/updateAccount", {
+      header,
+      title: "Edit Account",
+      message: "Please correct the following errors:",
+      nav,
+      errors,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id,
+    });
+  }
+
+  next();
+};
+
+validate.updatePasswordRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/)
+      .withMessage(
+        "Password must be at least 12 characters long, include at least 1 uppercase letter, 1 number, and 1 special character."
+      ),
+  ];
+};
+validate.checkUpdatePasswordData = async (req, res, next) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    return res.render("./account/updateAccount", {
+      title: "Edit Account",
+      nav,
+      errors,
+    });
+  }
+  next();
+};
+
 module.exports = validate;
