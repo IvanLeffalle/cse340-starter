@@ -107,7 +107,7 @@ const header = await utilities.getHeader(req, res);  const { account_email, acco
       account_email,
       message,
     })
-    return
+    return 
   }
   try {
     if (await bcrypt.compare(account_password, accountData.account_password)) {

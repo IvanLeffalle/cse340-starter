@@ -1,81 +1,70 @@
 <% if (title) { %>
-    <h1><%= title %></h1>
-    <p><%= message %></p>
+<h1><%= title %></h1>
+<p><%= message %></p>
 
-    <h2>Edit Account</h2>
-    <form id="edit-account-form" action="/account//update-account" method="post">
-        <!-- First Name Field -->
-        <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input
-              id="firstName"
-              name="first_name"
-              type="text"
-              required
-              value="<%= account_firstname|| "" %>"
-            />
-        </div>
-        
-        <!-- Last Name Field -->
-        <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input
-              id="lastName"
-              name="last_name"
-              type="text"
-              required
-              value="<%= account_lastname|| ""  %>"
-            />
-        </div>
-        
-        <!-- Email Field -->
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              id="email"
-              name="account_email"
-              type="email"
-              required
-              value="<%= account_email || "" %>"
-            />
-        </div>
-        
-        <!-- Update Button -->
-        <button type="submit" class="update-btn">Update</button>
-    </form>
-    
-    <h2>Update Password</h2>
-    <p>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</p>
-    <p class="note">*note your original password will be changed.</p>
-    
-    <form id="update-password-form" action="/account/update-password" method="post">
-        <!-- Password Field -->
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              id="password"
-              name="account_password"
-              type="password"
-              required
-              pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$"
-              title="Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character."
-            />
-            
-        </div>
-        
-        <!-- Show Password Button -->
-        <button type="button" id="show-password" class="show-password-btn">Show Password</button>
-        
-        <!-- Change Password Button -->
-        <button type="submit" class="change-password-btn">Change Password</button>
-    </form>
+<h2>Edit Account</h2>
+<form id="edit-account-form" action="/account//update-account" method="post">
+  <!-- First Name Field -->
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input id="firstName" name="first_name" type="text" required value="<%=
+    account_firstname|| "" %>" />
+  </div>
 
-<% } else { res.redirect('/'); } %> 
+  <!-- Last Name Field -->
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input id="lastName" name="last_name" type="text" required value="<%=
+    account_lastname|| "" %>" />
+  </div>
 
-<% if (errors) { %>
-    <ul class="notice">
-        <% errors.array().forEach(error => { %>
-        <li><%= error.msg %></li>
-        <% }) %>
-    </ul>
+  <!-- Email Field -->
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" name="account_email" type="email" required value="<%=
+    account_email || "" %>" />
+  </div>
+
+  <!-- Update Button -->
+
+  <button type="submit" class="update-btn">Update</button>
+  <input type="hidden" name="account_id" value="<%=  account_id|| '' %>" />
+</form>
+
+<h2>Update Password</h2>
+<p>
+  Passwords must be at least 12 characters and contain at least 1 number, 1
+  capital letter and 1 special character
+</p>
+<p class="note">*note your original password will be changed.</p>
+
+<form id="update-password-form" action="/account/update-password" method="post">
+  <!-- Password Field -->
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input
+      id="password"
+      name="account_password"
+      type="password"
+      required
+      pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$"
+      title="Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character."
+    />
+  </div>
+
+  <!-- Show Password Button -->
+  <button type="button" id="show-password" class="show-password-btn">
+    Show Password
+  </button>
+
+  <!-- Change Password Button -->
+  <button type="submit" class="change-password-btn">Change Password</button>
+</form>
+
+<% } else { res.redirect('/'); } %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
 <% } %>

@@ -17,8 +17,8 @@ const errorController = require("./controllers/errorController");
 const session = require("express-session");
 const pool = require("./database/");
 const accountRoute = require("./routes/accountRoute");
-const bodyParser = require("body-parser")
-const cookieParser = require("cookie-parser")
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 /* ************************
  * Middleware
@@ -37,10 +37,8 @@ app.use(
   })
 );
 
-
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 //Express Messages Middleware
 app.use(require("connect-flash")());
@@ -49,11 +47,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.use(utilities.checkJWTToken)
-
-
+app.use(utilities.checkJWTToken);
 
 /* ***********************
  * View Engine and Templates
@@ -86,7 +82,7 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav();
   const header = await utilities.getHeader(req, res);
-  
+
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
   if (err.status == 404) {
     message = err.message;
@@ -97,7 +93,7 @@ app.use(async (err, req, res, next) => {
     title: err.status || "Server Error",
     message,
     nav,
-    header
+    header,
   });
 });
 
