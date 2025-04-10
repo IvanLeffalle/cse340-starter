@@ -75,4 +75,13 @@ async function updateAccountPassword(account_password, account_id) {
   }
 }
 
-module.exports = { registerAccount, checkExistingEmail,getAccountByEmail,updateAccountPassword,updateAccount };
+async function getAllAccounts(){
+  try{
+    const sql = "SELECT * FROM public.account ORDER BY account_id"
+    return await pool.query(sql)
+
+  }catch(error){
+    return error.message
+  }
+}
+module.exports = { registerAccount,getAllAccounts, checkExistingEmail,getAccountByEmail,updateAccountPassword,updateAccount };

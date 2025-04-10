@@ -239,7 +239,38 @@ accountCont.updatePassword = async function (req, res) {
       })
     }
 }
+/* ****************************************
+ *  Build Admin Dashboard
+ * ************************************ */
+accountCont.buildAdminView = async function (req,res,next){
+  let nav = await utilities.getNav()
+  const header = await utilities.getHeader(req, res);  
+  let accountData = res.locals.accountData;
+  let name = accountData.account_firstname;
+  res.render("./account/admin", {
+    title: `Welcome ${name}`,
+    message:"You're logged in",
+    nav,
+    header,
+    errors: null,
+  });
 
+}
+
+/* ***************************
+ *  Return account As JSON
+ * ************************** */
+
+accountCont.getAccounts = async function (req,res){
+  try {
+    const result = await accountModel.getAllAccounts();
+    console.log("data", result)
+    res.json(result.rows);
+      }
+      catch(error){
+        res.status(500).json({ message: "Error getting accounts" });
+      }
+}
 /* ****************************************
  *  Process to logout
  * ************************************ */

@@ -1,0 +1,16 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<%- messages()%>
+
+<h2>Manage Accounts</h2>
+<div id="accountsDisplay"></div>
+<noscript>JavaScript must be enabled to use this page.</noscript>
+
+<% } else { res.redirect('/'); } %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+<script src="../../js/accounts.js"></script>

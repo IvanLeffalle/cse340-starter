@@ -340,6 +340,26 @@ span {
     border-radius: 4px;
     list-style-position: inside;
   }
+
+  /*admin dashboard*/
+  #accountsDisplay table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    border: 1px solid #000;
+  }
+  
+  #accountsDisplay th,
+  #accountsDisplay td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  #accountsDisplay th {
+    background-color: #f0f0f0;
+  }
+  
 /*Media queries*/
 /* Mobile Devices (up to 600px) */
 @media only screen and (max-width: 600px) {
