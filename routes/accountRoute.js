@@ -20,31 +20,60 @@ router.post(
   utilities.handleErrors(accountController.registerAccount)
 );
 // Process the login attempt
-router.post("/login",
+router.post(
+  "/login",
   regValidate.loginRules(),
   regValidate.checkLoginData,
   utilities.handleErrors(accountController.accountLogin)
 );
 
-router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccount));
-
-router.get("/management", utilities.handleErrors(accountController.buildAccount));
-
-router.get("/update-account",  utilities.handleErrors(accountController.buildUpdateAccount));
-
-router.post("/update-account",regValidate.updateAccountRules (), regValidate.checkUpdateAccountData ,  utilities.handleErrors(accountController.updateAccount));
-router.post("/update-password", utilities.handleErrors(accountController.updatePassword));
+router.get(
+  "/",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccount)
+);
 
 router.get(
-  "/logout",
-  utilities.handleErrors(accountController.accountLogout)
-)
+  "/management",
+  utilities.handleErrors(accountController.buildAccount)
+);
+
+router.get(
+  "/update-account",
+  utilities.handleErrors(accountController.buildUpdateAccount)
+);
+
+router.post(
+  "/update-account",
+  regValidate.updateAccountRules(),
+  regValidate.checkUpdateAccountData,
+  utilities.handleErrors(accountController.updateAccount)
+);
+router.post(
+  "/update-password",
+  utilities.handleErrors(accountController.updatePassword)
+);
+
+router.get("/logout", utilities.handleErrors(accountController.accountLogout));
 
 //admin dashboard routes
-router.get("/admin",utilities.handleErrors(accountController.buildAdminView))
-router.get("/admin/get-accounts", utilities.handleErrors(accountController.getAccounts))
+router.get("/admin", utilities.handleErrors(accountController.buildAdminView));
+router.get(
+  "/admin/get-accounts",
+  utilities.handleErrors(accountController.getAccounts)
+);
 
-router.get("edit", utilities.handleErrors(accountController.accountBuildEditAccountt))
+router.get(
+  "/edit/:accountId",
+  utilities.handleErrors(accountController.buildEditAccount)
+);
+router.get("/edit", utilities.handleErrors(accountController.buildEditAccount));
+router.post("/edit", utilities.handleErrors(accountController.editAccount));
 
+router.get(
+  "/delete/:acc_id",
+  utilities.handleErrors(accountController.buildDeleteAccount)
+);
+router.post("/delete", utilities.handleErrors(accountController.deleteAccount));
 
 module.exports = router;

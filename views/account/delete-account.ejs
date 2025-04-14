@@ -2,7 +2,12 @@
 <h1><%= title %></h1>
 
 <!-- Registration Form -->
-<form id="edit-form" action="/account/edit" method="post">
+<form
+  id="edit-form"
+  action="/account/delete"
+  method="post"
+  onsubmit="return confirmDelete()"
+>
   <label for="firstName">First Name</label>
   <input
     type="text"
@@ -10,6 +15,7 @@
     id="accountFirstname"
     required
     value="<%= locals.account_firstname %>"
+    readonly
   />
 
   <label for="lastName">Last Name</label>
@@ -18,6 +24,7 @@
     name="account_lastname"
     id="accountLastname"
     required
+    readonly
     value="<%= locals.account_lastname %>"
   />
 
@@ -27,20 +34,16 @@
     name="account_email"
     id="email"
     required
+    readonly
     value="<%= locals.account_email %>"
   />
 
-  <label for="type">Type</label>
+  <button type="submit" id="edit-btn">Delete Account</button>
   <input
-    type="type"
-    name="account_type"
-    id="type"
-    required
-    value="<%= account_type %>"
+    type="hidden"
+    name="account_id"
+    value="<%= locals.account_id || '' %>"
   />
-
-  <button type="submit" id="edit-btn">Update Account</button>
-  <input type="hidden" name="account_id" value="<%= account_id || '' %>" />
 </form>
 
 <!-- Sign Up Link -->
@@ -52,3 +55,11 @@
   <% }) %>
 </ul>
 <% } %>
+
+<script>
+  function confirmDelete() {
+    return confirm(
+      "Are you sure you want to delete this account? This action cannot be undone."
+    );
+  }
+</script>
