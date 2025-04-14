@@ -40,7 +40,11 @@ router.get(
   utilities.handleErrors(accountController.accountLogout)
 )
 
-
+//admin dashboard routes
 router.get("/admin",utilities.handleErrors(accountController.buildAdminView))
 router.get("/admin/get-accounts", utilities.handleErrors(accountController.getAccounts))
+
+router.get("edit", utilities.handleErrors(accountController.accountBuildEditAccountt))
+
+
 module.exports = router;

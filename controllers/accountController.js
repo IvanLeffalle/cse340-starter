@@ -254,7 +254,6 @@ accountCont.buildAdminView = async function (req,res,next){
     header,
     errors: null,
   });
-
 }
 
 /* ***************************
@@ -271,6 +270,22 @@ accountCont.getAccounts = async function (req,res){
         res.status(500).json({ message: "Error getting accounts" });
       }
 }
+/* ***************************
+ *  Edit account
+ * ************************** */
+accountCont.accountBuildEditAccountt = async function (req,res ) {
+    let nav = await utilities.getNav()
+    const header = await utilities.getHeader(req, res);  
+    let accountData = res.locals.accountData;
+    let name = accountData.account_firstname;
+    res.render("./account/edit-acount", {
+      title: `Edit account ${name}`,
+      nav,
+      header,
+      errors: null,
+    });
+}
+
 /* ****************************************
  *  Process to logout
  * ************************************ */

@@ -1,0 +1,48 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    
+    <!-- Registration Form -->
+    <form id="edit-form" action="/account/edit" method="post">
+      <label for="firstName">First Name</label>
+      <input
+        type="text"
+        name="account_firstname"
+        id="accountFirstname"
+        required
+        value="<%= locals.account_firstname %>"
+      />
+    
+      <label for="lastName">Last Name</label>
+      <input
+        type="text"
+        name="account_lastname"
+        id="accountLastname"
+        required
+        value="<%= locals.account_lastname %>"
+      />
+    
+      <label for="email">Email Address</label>
+      <input
+        type="email"
+        name="account_email"
+        id="email"
+        required
+        value="<%= locals.account_email %>"
+      />
+    
+   
+    
+      <button type="submit" id="edit-btn">Update Account</button>
+     
+    </form>
+    
+    <!-- Sign Up Link -->
+    
+    <% } else { res.redirect('/'); } %> <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+    
