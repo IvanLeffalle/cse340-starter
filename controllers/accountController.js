@@ -247,7 +247,7 @@ accountCont.editAccount = async function (req, res) {
   );
 
   if (updateResult) {
-    console.log("the info has been u´dated");
+    console.log("the info has been updated");
     req.flash(
       "notice",
       `Congratulations, you\'ve updated ${account_firstname}.`
